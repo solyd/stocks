@@ -1,0 +1,297 @@
+* From URL – http://ichart.finance.yahoo.com
+
+ a = From Month
+ b = From Day
+ c = From Year
+ d = To Month
+ e = To Day
+ f = To Year
+
+ Eg: 6 months data for Taylor Wimpey:
+ http://ichart.finance.yahoo.com/table.csv?s=TW.L&a=03&b=07&c=2013&d=09&e=04&f=2013
+
+* Historic data
+ To specify daily quote stop and start dates try this:
+
+ “http://ichart.finance.yahoo.com/table.csv?s=” & ticker & “&d=” & (endDate.Month – 1) & “&e=” & endDate.Day & “&f=” & endDate.Year & “&g=d&a=” & (startDate.Month – 1) & “&b=” & startDate.Day & “&c=” & startDate.Year & “&ignore=.csv”
+
+ So to get AAPL from Jan 1, 2008 til May 2, 2011 you could use:
+
+ http://ichart.finance.yahoo.com/table.csv?s=AAPL&d=4&e=2&f=2011&g=d&a=0&b=1&c=2008&ignore.csv
+
+ If you want weekly quotes you can follow the format:
+
+ “http://ichart.finance.yahoo.com/table.csv?s=” & ticker & “&a=” & (startDate.Month – 1) & “&b=” & startDate.Day & “&c=” & startDate.Year & “&d=” & (endDate.Month – 1) & “&e=” & endDate.Day & “&f=” & endDate.Year & “&g=w&ignore=.csv”
+
+* limits
+ =========
+ I’ve just discovered yahoo will only allow data for 200 stocks max
+ in any 1 call (sorry if already mentioned). If you have more, you
+ can do it in chunks of 200 at a time.
+
+ http://download.finance.yahoo.com/d/quotes.csv?s=AAPL+GOOG+MSFT
+
+  Try appending &f=nab to the end of your query which would in this
+  example give the name,ask and bid price, as described at start of
+  the article.
+
+* tags
+ c4 = currency
+
+ I found that you can get the full company name (not cut off after
+ 17 or so characters) through the Yahoo! Finance charting API:
+ http://chartapi.finance.yahoo.com/instrument/1.0/msft/chartdata;type=quote;range=1d/csv/
+
+* How to call the free Yahoo Finance API
+ The base url your going to call is http://finance.yahoo.com/d/quotes.csv
+
+ Then you add a ?s= and the stock symbols your interested in such as
+ APPL, GOOG and MSFT like so
+
+ http://finance.yahoo.com/d/quotes.csv?s=AAPL+GOOG+MSFT
+
+ Then you specify the info you want. There is a large list of stuff
+ you can specify, just look at the list below for more info.
+
+ http://finance.yahoo.com/d/quotes.csv?s=AAPL+GOOG+MSFT&f=nab
+
+ This will get the name of the stock, the ask price and bid price
+ (the “nab” = name,ask and bid)
+
+
+* Financial Data you can Download
+** source 1
+ Pricing 	Dividends
+ a: Ask 	y: Dividend Yield
+ b: Bid 	d: Dividend per Share
+ b2: Ask (Realtime) 	r1: Dividend Pay Date
+ b3: Bid (Realtime) 	q: Ex-Dividend Date
+ p: Previous Close
+ o: Open
+ Date
+ c1: Change 	d1: Last Trade Date
+ c: Change & Percent Change 	d2: Trade Date
+ c6: Change (Realtime) 	t1: Last Trade Time
+ k2: Change Percent (Realtime)
+ p2: Change in Percent
+ Averages
+ c8: After Hours Change (Realtime) 	m5: Change From 200 Day Moving Average
+ c3: Commission 	m6: Percent Change From 200 Day Moving Average
+ g: Day’s Low 	m7: Change From 50 Day Moving Average
+ h: Day’s High 	m8: Percent Change From 50 Day Moving Average
+ k1: Last Trade (Realtime) With Time 	m3: 50 Day Moving Average
+ l: Last Trade (With Time) 	m4: 200 Day Moving Average
+ l1: Last Trade (Price Only)
+ t8: 1 yr Target Price
+ Misc
+ w1: Day’s Value Change 	g1: Holdings Gain Percent
+ w4: Day’s Value Change (Realtime) 	g3: Annualized Gain
+ p1: Price Paid 	g4: Holdings Gain
+ m: Day’s Range 	g5: Holdings Gain Percent (Realtime)
+ m2: Day’s Range (Realtime) 	g6: Holdings Gain (Realtime)
+ 52 Week Pricing 	Symbol Info
+ k: 52 Week High 	v: More Info
+ j: 52 week Low 	j1: Market Capitalization
+ j5: Change From 52 Week Low 	j3: Market Cap (Realtime)
+ k4: Change From 52 week High 	f6: Float Shares
+ j6: Percent Change From 52 week Low 	n: Name
+ k5: Percent Change From 52 week High 	n4: Notes
+ w: 52 week Range 	s: Symbol
+ 	s1: Shares Owned
+ 	x: Stock Exchange
+ 	j2: Shares Outstanding
+ Volume
+ v: Volume
+ a5: Ask Size
+ b6: Bid Size 	Misc
+ k3: Last Trade Size 	t7: Ticker Trend
+ a2: Average Daily Volume 	t6: Trade Links
+ 	i5: Order Book (Realtime)
+ Ratios 	l2: High Limit
+ e: Earnings per Share 	l3: Low Limit
+ e7: EPS Estimate Current Year 	v1: Holdings Value
+ e8: EPS Estimate Next Year 	v7: Holdings Value (Realtime)
+ e9: EPS Estimate Next Quarter 	s6 Revenue
+ b4: Book Value
+ j4: EBITDA
+ p5: Price / Sales
+ p6: Price / Book
+ r: P/E Ratio
+ r2: P/E Ratio (Realtime)
+ r5: PEG Ratio
+ r6: Price / EPS Estimate Current Year
+ r7: Price / EPS Estimate Next Year
+ s7: Short Ratio
+
+** source 2
+a 	Ask 	a2 	Average Daily Volume
+a5 	Ask Size
+
+b 	Bid
+b2 	Ask (Real-time) 	b3 	Bid (Real-time)
+
+b4 	Book Value
+b6 	Bid Size
+c 	Change & Percent Change
+c1 	Change
+c3 	Commission
+c6 	Change (Real-time)
+
+c8 	After Hours Change (Real-time) 	d 	Dividend/Share
+d1 	Last Trade Date
+
+d2 	Trade Date
+e 	Earnings/Share 	e1 	Error Indication (returned for symbol changed / invalid)
+
+e7 	EPS Estimate Current Year
+e8 	EPS Estimate Next Year
+e9 	EPS Estimate Next Quarter
+f6 	Float Shares
+g 	Day’s Low
+h 	Day’s High
+
+j 	52-week Low 	k 	52-week High
+g1 	Holdings Gain Percent
+
+g3 	Annualized Gain
+g4 	Holdings Gain 	g5 	Holdings Gain Percent (Real-time)
+
+g6 	Holdings Gain (Real-time)
+i 	More Info
+i5 	Order Book (Real-time)
+j1 	Market Capitalization
+j3 	Market Cap (Real-time)
+j4 	EBITDA
+
+j5 	Change From 52-week Low 	j6 	Percent Change From 52-week Low
+k1 	Last Trade (Real-time) With Time
+
+k2 	Change Percent (Real-time)
+k3 	Last Trade Size 	k4 	Change From 52-week High
+
+k5 	Percebt Change From 52-week High
+l 	Last Trade (With Time)
+l1 	Last Trade (Price Only)
+l2 	High Limit
+l3 	Low Limit
+m 	Day’s Range
+
+m2 	Day’s Range (Real-time) 	m3 	50-day Moving Average
+m4 	200-day Moving Average
+
+m5 	Change From 200-day Moving Average
+m6 	Percent Change From 200-day Moving Average 	m7 	Change From 50-day Moving Average
+
+m8 	Percent Change From 50-day Moving Average
+n 	Name
+n4 	Notes
+o 	Open
+p 	Previous Close
+p1 	Price Paid
+
+p2 	Change in Percent 	p5 	Price/Sales
+p6 	Price/Book
+
+q 	Ex-Dividend Date
+r 	P/E Ratio 	r1 	Dividend Pay Date
+
+r2 	P/E Ratio (Real-time)
+r5 	PEG Ratio
+r6 	Price/EPS Estimate Current Year
+r7 	Price/EPS Estimate Next Year
+s 	Symbol
+s1 	Shares Owned
+
+s7 	Short Ratio 	t1 	Last Trade Time
+t6 	Trade Links
+
+t7 	Ticker Trend
+t8 	1 yr Target Price 	v 	Volume
+
+v1 	Holdings Value
+v7 	Holdings Value (Real-time)
+w 	52-week Range
+w1 	Day’s Value Change
+w4 	Day’s Value Change (Real-time)
+x 	Stock Exchange
+
+y 	Dividend Yield 		:)
+
+* Country 	Exchange 	Suffix 	Delay 	Data Provider
+ United States of America 	American Stock Exchange 	N/A 	15 min 	Direct from Exchange
+ United States of America 	BATS Exchange 	N/A 	Real-time 	Direct from Exchange
+ United States of America 	Chicago Board of Trade 	.CBT 	10 min 	Interactive Data Real-Time Services
+ United States of America 	Chicago Mercantile Exchange 	.CME 	10 min 	Interactive Data Real-Time Services
+ United States of America 	Dow Jones Indexes 	N/A 	Real-time 	Interactive Data Real-Time Services
+ United States of America 	NASDAQ Stock Exchange 	N/A 	15 min 	Direct from Exchange
+ United States of America 	New York Board of Trade 	.NYB 	30 min 	Interactive Data Real-Time Services
+ United States of America 	New York Commodities Exchange 	.CMX 	30 min 	Interactive Data Real-Time Services
+ United States of America 	New York Mercantile Exchange 	.NYM 	30 min 	Interactive Data Real-Time Services
+ United States of America 	New York Stock Exchange 	N/A 	15 min 	Direct from Exchange
+ United States of America 	OTC Bulletin Board Market 	.OB 	20 min 	Direct from Exchange
+ United States of America 	Pink Sheets 	.PK 	15 min 	Direct from Exchange
+ United States of America 	S & P Indices 	N/A 	Real-time 	Interactive Data Real-Time Services
+ Argentina 	Buenos Aires Stock Exchange 	.BA 	30 min 	Interactive Data Real-Time Services
+ Austria 	Vienna Stock Exchange 	.VI 	15 min 	Telekurs
+ Australia 	Australian Stock Exchange 	.AX 	20 min 	Interactive Data Real-Time Services
+ Belgium 	Brussels Stocks 	.BR 	15 min
+ Brazil 	BOVESPA – Sao Paolo Stock Exchange 	.SA 	15 min 	Interactive Data Real-Time Services
+ Canada 	Toronto Stock Exchange 	.TO 	15 min 	Interactive Data Real-Time Services
+ Canada 	TSX Venture Exchange 	.V 	15 min 	Interactive Data Real-Time Services
+ Chile 	Santiago Stock Exchange 	.SN 	15 min 	Interactive Data Real-Time Services
+ China 	Shanghai Stock Exchange 	.SS 	30 min 	Interactive Data Real-Time Services
+ China 	Shenzhen Stock Exchange 	.SZ 	30 min 	Interactive Data Real-Time Services
+ Denmark 	Copenhagen Stock Exchange 	.CO 	15 min 	Telekurs
+ France 	Euronext 	.NX 	15 min 	Telekurs
+ France 	Paris Stock Exchange 	.PA 	15 min 	Telekurs
+ Germany 	Berlin Stock Exchange 	.BE 	15 min 	Telekurs
+ Germany 	Bremen Stock Exchange 	.BM 	15 min 	Telekurs
+ Germany 	Dusseldorf Stock Exchange 	.DU 	15 min 	Telekurs
+ Germany 	Frankfurt Stock Exchange 	.F 	15 min 	Telekurs
+ Germany 	Hamburg Stock Exchange 	.HM 	15 min 	Telekurs
+ Germany 	Hanover Stock Exchange 	.HA 	15 min 	Telekurs
+ Germany 	Munich Stock Exchange 	.MU 	15 min 	Telekurs
+ Germany 	Stuttgart Stock Exchange 	.SG 	15 min 	Telekurs
+ Germany 	XETRA Stock Exchange 	.DE 	15 min 	Telekurs
+ Hong Kong 	Hong Kong Stock Exchange 	.HK 	15 min 	Interactive Data Real-Time Services
+ India 	Bombay Stock Exchange 	.BO 	15 min 	Interactive Data Real-Time Services
+ India 	National Stock Exchange of India 	.NS 	15 min 	National Stock Exchange of India
+ Indonesia 	Jakarta Stock Exchange 	.JK 	10 min 	Interactive Data Real-Time Services
+ Israel 	Tel Aviv Stock Exchange 	.TA 	20 min 	Telekurs
+ Italy 	Milan Stock Exchange 	.MI 	20 min 	Telekurs
+ Japan 	Nikkei Indices 	N/A 	30 min 	Interactive Data Real-Time Services
+ Mexico 	Mexico Stock Exchange 	.MX 	20 min 	Telekurs
+ Netherlands 	Amsterdam Stock Exchange 	.AS 	15 min 	Telekurs
+ New Zealand 	New Zealand Stock Exchange 	.NZ 	20 min 	Interactive Data Real-Time Services
+ Norway 	Oslo Stock Exchange 	.OL 	15 min 	Telekurs
+ Portugal 	Lisbon Stocks 	.LS 	15 min
+ Singapore 	Singapore Stock Exchange 	.SI 	20 min 	Interactive Data Real-Time Services
+ South Korea 	Korea Stock Exchange 	.KS 	20 min 	Interactive Data Real-Time Services
+ South Korea 	KOSDAQ 	.KQ 	20 min 	Interactive Data Real-Time Services
+ Spain 	Barcelona Stock Exchange 	.BC 	15 min 	Telekurs
+ Spain 	Bilbao Stock Exchange 	.BI 	15 min 	Telekurs
+ Spain 	Madrid Fixed Income Market 	.MF 	15 min 	Telekurs
+ Spain 	Madrid SE C.A.T.S. 	.MC 	15 min 	Telekurs
+ Spain 	Madrid Stock Exchange 	.MA 	15 min 	Telekurs
+ Sweden 	Stockholm Stock Exchange 	.ST 	15 min 	Telekurs
+ Switzerland 	Swiss Exchange 	.SW 	30 min 	Telekurs
+ Taiwan 	Taiwan OTC Exchange 	.TWO 	20 min 	Interactive Data Real-Time Services
+ Taiwan 	Taiwan Stock Exchange 	.TW 	20 min 	Interactive Data Real-Time Services
+ United Kingdom 	FTSE Indices 	N/A 	15 min 	Telekurs
+ United Kingdom 	London Stock Exchange 	.L 	20 min 	Telekurs
+
+* YQ:
+ select * from yahoo.finance.stocks where symbol=”aapl”
+
+ http://query.yahooapis.com/v1/public/yql?q=
+ select %20*%20 from %20 yahoo.finance.quotes %20 where %20
+ symbol %20 in %20 (%22 AAPL %22) &env=store://datatables.org/alltableswithkeys
+
+ searching stocks:
+ http://autoc.finance.yahoo.com/autoc?query=google&callback=YAHOO.Finance.SymbolSuggest.ssCallback
+
+* NOTES
+- BATS exchange = source for real time stock data
+- Yahoo login should be signed in to get realtime feed. otherwise
+  Yahoo will provide 15 mins delays data. The request should be a web
+  browser request with the yahoo email already signed in.
