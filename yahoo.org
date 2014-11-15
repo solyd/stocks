@@ -2,6 +2,7 @@
  http://finance.yahoo.com/d/quotes.csv?s=GE&f=nkqwxyr1l9t5p4
  http://finance.yahoo.com/d/quotes.csv?s=BBDB.TO+NT.TO+GE+MSFT&f=snl1d1t1ohgdr
 
+
 * From URL – http://ichart.finance.yahoo.com
 
  a = From Month
